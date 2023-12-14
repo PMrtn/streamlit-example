@@ -5,3 +5,4 @@ joblib
 pickleshare==0.7.5
 tensorflow==2.9
 keras
+protobuf==3.20.1
