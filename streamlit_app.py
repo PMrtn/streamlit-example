@@ -6,9 +6,11 @@ import streamlit as st
 import tensorflow as tf
 #import joblib
 
-st.write("""Trueskill_sigma regression""")
+st.subheader("""Trueskill_sigma regression""")
 
-st.subheader("Pintér Martin")
+st.write("Pintér Martin")
+st.write()
+st.write()
 
 #RNN_model = joblib.load('trueskill_sigma.sav')
 
