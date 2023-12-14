@@ -39,8 +39,7 @@ FNN_model = keras.Sequential([
     layers.Dense(1)
 ])
 
-#FNN_model.compile(optimizer='adam', loss='mean_squared_error')
-
+FNN_model.compile(optimizer='adam', loss='mean_squared_error')
 FNN_model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2, verbose=1)
 
 
