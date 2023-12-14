@@ -61,9 +61,11 @@ gold_killing_creeps = st.slider('Gold for killing creeps', min_value=0, max_valu
 total_matches = st.slider('Total matches', min_value=0, max_value=5000, value=4891, step=1)
 total_wins = st.slider('Total wins', min_value=0, max_value=5000, value=2727, step=1)
 
+predict_data = np.reshape([gpm,xpm,kills,deaths,assists,last_hits,hero_damage,tower_damage,xp_hero_kills,xp_creeps,other_xp,gold_killing_heroes,gold_killing_creeps,total_matches,total_wins], (1, 16))
+
 prediction = 0
 
 PredictionButton = st.button('Predict trueskill_sigma!')
 if(PredictionButton):
-    prediction = FNN_model.predict([[gpm,xpm,kills,deaths,assists,last_hits,hero_damage,tower_damage,xp_hero_kills,xp_creeps,other_xp,gold_killing_heroes,gold_killing_creeps,total_matches,total_wins]])
+    prediction = FNN_model.predict(predict_data)
     st.subheader(f'The predicted trueskill_sigma is: {[prediction[0]]}')
