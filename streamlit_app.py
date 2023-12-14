@@ -69,4 +69,4 @@ prediction = 0
 PredictionButton = st.button('Predict trueskill_sigma!')
 if(PredictionButton):
     prediction = FNN_model.predict(predict_data)
-    st.subheader(f'The predicted trueskill_sigma is: {[prediction[0]]}')
+    st.subheader(f'The predicted trueskill_sigma is: {[prediction[0][0]]}')
