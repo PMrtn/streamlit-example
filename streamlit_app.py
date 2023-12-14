@@ -14,7 +14,9 @@ st.write()
 st.write()
 
 #RNN_model = joblib.load('trueskill_sigma.sav')
-RNN_model = pickle.load(open('trueskill_sigma.sav','rb'))
+#RNN_model = pickle.load(open('trueskill_sigma.sav','rb'))
+with open('trueskill_sigma_model.pkl', 'rb') as f:
+    RNN_model = pickle.load(f)
 
 gpm = st.slider('GPM', min_value=0, max_value=1200, value=650, step=1)
 xpm = st.slider('XPM', min_value=0, max_value=1200, value=700, step=1)
