@@ -4,19 +4,45 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import tensorflow as tf
-import joblib
-import pickle
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
 
 st.subheader("""Trueskill_sigma regression""")
-
 st.write("Pintér Martin")
 st.write()
 st.write()
 
-#RNN_model = joblib.load('trueskill_sigma.sav')
-#RNN_model = pickle.load(open('trueskill_sigma.sav','rb'))
-with open('trueskill_sigma_model.pkl', 'rb') as f:
-    RNN_model = pickle.load(f)
+
+player_stats_filtered = pd.read_csv("player_stats_filtered.csv")
+
+X = player_stats_filtered[['gold_per_min', 'xp_per_min', 'kills', 'deaths', 'assists', 'last_hits',
+           'hero_damage', 'tower_damage', 'xp_hero', 'xp_creep', 'xp_roshan', 'xp_other',
+           'gold_killing_heros', 'gold_killing_creeps', 'total_wins', 'total_matches']]
+y = player_stats_filtered['trueskill_sigma']
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
+
+
+from sklearn.preprocessing import StandardScaler
+from tensorflow import keras
+from tensorflow.keras import layers
+
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+FNN_model = keras.Sequential([
+    layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+    layers.Dense(32, activation='relu'),
+    layers.Dense(1)
+])
+
+FNN_model.compile(optimizer='adam', loss='mean_squared_error')
+
+history = FNN_model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2, verbose=1)
+
+
 
 gpm = st.slider('GPM', min_value=0, max_value=1200, value=650, step=1)
 xpm = st.slider('XPM', min_value=0, max_value=1200, value=700, step=1)
@@ -38,5 +64,5 @@ prediction = 0
 
 PredictionButton = st.button('Predict trueskill_sigma!')
 if(PredictionButton):
-    prediction = RNN_model.predict([[gpm,xpm,kills,deaths,assists,last_hits,hero_damage,tower_damage,xp_hero_kills,xp_creeps,other_xp,gold_killing_heroes,gold_killing_creeps,total_matches,total_wins]])
+    prediction = FNN_model.predict([[gpm,xpm,kills,deaths,assists,last_hits,hero_damage,tower_damage,xp_hero_kills,xp_creeps,other_xp,gold_killing_heroes,gold_killing_creeps,total_matches,total_wins]])
     st.subheader(f'The predicted trueskill_sigma is: {[prediction[0]]}')
