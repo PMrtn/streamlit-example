@@ -5,11 +5,10 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import tensorflow as tf
-from tensorflow.keras.models import load_model
-import joblib
+#import joblib
 
 
-RNN_model = joblib.load('trueskill_sigma.sav')
+#RNN_model = joblib.load('trueskill_sigma.sav')
 
 num_points = st.slider("GPM", 1, 10000, 1100)
 num_turns = st.slider("XPM", 1, 300, 31)
