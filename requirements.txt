@@ -4,3 +4,4 @@ streamlit
 joblib
 pickleshare==0.7.5
 tensorflow
+keras
