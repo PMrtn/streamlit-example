@@ -27,24 +27,6 @@ y = player_stats_filtered['trueskill_sigma']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
 
 
-from sklearn.preprocessing import StandardScaler
-from tensorflow import keras
-from tensorflow.keras import layers
-
-scaler = StandardScaler()
-X = scaler.fit_transform(X)
-
-FNN_model = keras.Sequential([
-    layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
-    layers.Dense(32, activation='relu'),
-    layers.Dense(1)
-])
-
-FNN_model.compile(optimizer='adam', loss='mean_squared_error')
-FNN_model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2, verbose=0)
-
-
-
 gpm = st.slider('GPM', min_value=0, max_value=1200, value=650, step=1)
 xpm = st.slider('XPM', min_value=0, max_value=1200, value=700, step=1)
 kills = st.slider('Kills', min_value=0, max_value=100, value=10, step=1)
@@ -63,6 +45,23 @@ total_matches = st.slider('Total matches', min_value=0, max_value=5000, value=48
 total_wins = st.slider('Total wins', min_value=0, max_value=5000, value=2727, step=1)
 
 predict_data = np.reshape([gpm,xpm,kills,deaths,assists,last_hits,hero_damage,tower_damage,xp_hero_kills,xp_creeps,xp_rosh,other_xp,gold_killing_heroes,gold_killing_creeps,total_matches,total_wins], (1, 16))
+
+from sklearn.preprocessing import StandardScaler
+from tensorflow import keras
+from tensorflow.keras import layers
+
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+FNN_model = keras.Sequential([
+    layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+    layers.Dense(32, activation='relu'),
+    layers.Dense(1)
+])
+
+FNN_model.compile(optimizer='adam', loss='mean_squared_error')
+FNN_model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2, verbose=0)
+
 
 prediction = 0
 
