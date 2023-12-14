@@ -2,3 +2,4 @@ altair
 pandas
 streamlit
 joblib
+pickleshare==0.7.5
