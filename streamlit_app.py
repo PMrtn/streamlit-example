@@ -16,12 +16,13 @@ st.write()
 
 
 player_stats_filtered = pd.read_csv("player_stats_filtered.csv")
+st.write(player_stats_filtered.head())
+
 
 X = player_stats_filtered[['gold_per_min', 'xp_per_min', 'kills', 'deaths', 'assists', 'last_hits',
            'hero_damage', 'tower_damage', 'xp_hero', 'xp_creep', 'xp_roshan', 'xp_other',
            'gold_killing_heros', 'gold_killing_creeps', 'total_wins', 'total_matches']]
 y = player_stats_filtered['trueskill_sigma']
-
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
 
@@ -40,7 +41,7 @@ FNN_model = keras.Sequential([
 ])
 
 FNN_model.compile(optimizer='adam', loss='mean_squared_error')
-FNN_model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2, verbose=1)
+FNN_model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.2, verbose=0)
 
 
 
