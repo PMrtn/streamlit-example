@@ -3,5 +3,5 @@ pandas
 streamlit
 joblib
 pickleshare==0.7.5
-tensorflow
+tensorflow==2.9
 keras
