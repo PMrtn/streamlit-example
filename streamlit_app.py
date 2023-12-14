@@ -1,4 +1,4 @@
-!pip install --upgrade tensorflow
+%pip install --upgrade tensorflow
 
 import altair as alt
 import numpy as np
